@@ -1,0 +1,20 @@
+version: "3"
+services:
+  rabbit_mq:
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: demo
+    ports:
+      - "20000:15672"
+      - "20001:5672"
+  word.counter.worker:
+    build: ../WordCounter.Worker/
+    depends_on:
+      - rabbit_mq
+  word.counter.api:
+    build: ../WordCounter.Api/
+    depends_on:
+      - rabbit_mq
+    ports:
+      - 5000:5000
