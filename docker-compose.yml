@@ -8,6 +8,14 @@ services:
     ports:
       - "20000:15672"
       - "20001:5672"
+  db:
+    image: postgres:12.2
+    ports:
+      20002:5432
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: demo
+      POSTGRES_DB: counters
   word.counter.worker:
     build: ../WordCounter.Worker/
     depends_on:
