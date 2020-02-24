@@ -20,9 +20,11 @@ services:
     build: ../WordCounter.Worker/
     depends_on:
       - rabbit_mq
+      - db
   word.counter.api:
     build: ../WordCounter.Api/
     depends_on:
       - rabbit_mq
+      - db
     ports:
       - 5000:5000
