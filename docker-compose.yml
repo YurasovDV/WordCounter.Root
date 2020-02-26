@@ -17,14 +17,20 @@ services:
       POSTGRES_PASSWORD: demo
       POSTGRES_DB: counters
   word.counter.worker:
-    build: ../WordCounter.Worker/
+    build: ../wordcounter.worker/
     depends_on:
       - rabbit_mq
       - db
   word.counter.api:
-    build: ../WordCounter.Api/
+    build: ../wordcounter.api/
     depends_on:
       - rabbit_mq
       - db
     ports:
       - 5000:5000
+  word.counter.front:
+    build: ../wordcounter.client/
+    depends_on:
+      - word.counter.api
+    ports:
+      - 20003:80 
